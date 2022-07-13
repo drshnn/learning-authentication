@@ -8,10 +8,7 @@ try {
 const user = await User.create({
     username,email,password
 });
-res.status(201).json({
-    sucess:true,
-    user
-});
+sendToken(user,201,res)
 } catch (error) {
    next(error)
 }
@@ -32,10 +29,8 @@ try {
     if(!isMatch){
     return next(new ErrorResponse("Invalid Credentials",401))
     }
-    res.status(201).json({
-        success:true,
-        token:"24l3j42dlhaldjkfs"
-    })
+
+sendToken(user,201,res)
 } catch (error) {
     return next(error)
 }
@@ -46,4 +41,11 @@ res.send("Forgot Password Route");
 }
 exports.resetPassword=(req,res,next)=>{
     res.send('Reset Password Route')
+}
+
+
+
+const sendToken = (user,statusCode,res)=>{
+    const token = user.getSignedToken()
+    res.status(statusCode).json({success:true, token})
 }
