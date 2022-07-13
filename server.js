@@ -2,6 +2,7 @@ require('dotenv').config({path:"./config.env"})
 const express = require('express');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
+const errorHandler = require('./middleware/error')
 
 //connectDb
 connectDB()
@@ -12,6 +13,8 @@ app.use(express.json())
 //routes
 app.use('/api/auth/',require('./routes/auth'))
 
+//error handler (should be last middleware)
+app.use(errorHandler )
 PORT = process.env.PORT || 4444
 
 

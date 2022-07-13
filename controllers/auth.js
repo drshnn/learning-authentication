@@ -1,4 +1,7 @@
 const User = require('../models/User')
+const ErrorResponse = require('../utils/errorResponse')
+
+
 exports.register = async(req,res,next)=>{
 const {username,email,password} = req.body;
 try {
@@ -10,16 +13,33 @@ res.status(201).json({
     user
 });
 } catch (error) {
-   res.status(500).json({
-    sucess:false,
-    error: error.message,
-   });
+   next(error)
 }
 
 }
 
-exports.login= (req,res,next)=>{
-res.send("Login Route");
+exports.login= async(req,res,next)=>{
+    const {email,password} = req.body;
+    if(!email||!password) {
+    return next(new ErrorResponse("Please Provide an email and password"))
+    }
+try {
+   const user = await User.findOne({email}).select("+password");
+    if(!user){
+    return next(new ErrorResponse("Please Provide an email and password",401))
+    }
+    const isMatch = await user.matchPassword(password);
+    if(!isMatch){
+    return next(new ErrorResponse("Invalid Credentials",401))
+    }
+    res.status(201).json({
+        success:true,
+        token:"24l3j42dlhaldjkfs"
+    })
+} catch (error) {
+    return next(error)
+}
+
 }
 exports.forgotPassword= (req,res,next)=>{
 res.send("Forgot Password Route");
