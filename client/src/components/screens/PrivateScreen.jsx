@@ -1,5 +1,7 @@
 import React from "react";
 
-export const PrivateScreen = () => {
+function PrivateScreen() {
   return <div>PrivateScreen</div>;
-};
+}
+
+export default PrivateScreen;

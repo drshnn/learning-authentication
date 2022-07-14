@@ -1,5 +1,7 @@
 import React from "react";
 
-export const ForgotPasswordScreen = () => {
+function ForgotPasswordScreen() {
   return <div>ForgotPasswordScreen</div>;
-};
+}
+
+export default ForgotPasswordScreen;
