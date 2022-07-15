@@ -12,26 +12,27 @@ import Layout from "./components/screens/Layout";
 import MissingScreen from "./components/screens/MissingScreen";
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        {/* private route */}
-        <Route path="/" element={<PrivateScreen />} />
+    <div className="bg-[url('/img/hero-pattern.svg')]">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* private route */}
+          <Route path="/" element={<PrivateScreen />} />
 
-        {/* public routes */}
+          {/* public routes */}
 
-        <Route path="register" element={<RegisterScreen />} />
-        <Route path="login" element={<LoginScreen />} />
-        <Route path="forgotpassword" element={<ForgotPasswordScreen />} />
-        <Route
-          path="passwordreset/:resetToken"
-          element={<ResetPasswordScreen />}
-        />
+          <Route path="register" element={<RegisterScreen />} />
+          <Route path="login" element={<LoginScreen />} />
+          <Route path="forgotpassword" element={<ForgotPasswordScreen />} />
+          <Route
+            path="passwordreset/:resetToken"
+            element={<ResetPasswordScreen />}
+          />
 
-        {/* catch all : path mismatch */}
-        <Route path="*" element={<MissingScreen />} />
-      </Route>
-    </Routes>
-
+          {/* catch all : path mismatch */}
+          <Route path="*" element={<MissingScreen />} />
+        </Route>
+      </Routes>
+    </div>
     // <Router>
     //   <div className="App">
     //     <Switch>
