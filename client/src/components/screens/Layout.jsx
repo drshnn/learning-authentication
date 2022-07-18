@@ -2,9 +2,9 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <main className="app">
+    <div className="max-w-7xl m-auto h-screen ">
       <Outlet />
-    </main>
+    </div>
   );
 };
 export default Layout;

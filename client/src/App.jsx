@@ -12,14 +12,13 @@ import Layout from "./components/screens/Layout";
 import MissingScreen from "./components/screens/MissingScreen";
 function App() {
   return (
-    <div className="bg-[url('/img/hero-pattern.svg')]">
+    <div className="w-screen">
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* private route */}
           <Route path="/" element={<PrivateScreen />} />
 
           {/* public routes */}
-
           <Route path="register" element={<RegisterScreen />} />
           <Route path="login" element={<LoginScreen />} />
           <Route path="forgotpassword" element={<ForgotPasswordScreen />} />
