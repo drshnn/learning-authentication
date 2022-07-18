@@ -1,6 +1,50 @@
-import React from "react";
+import { useRef, useState, useEffect } from "react";
+
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 function RegisterScreen() {
+  // for focust on username field when load, for focus on error field when error
+  const userRef = useRef();
+  const errRef = useRef();
+  // states
+  const [username, setUsername] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
+
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatchPwd, setValidMatchPwd] = useState(false);
+  const [matchPwdFocus, setMatchPwdFocus] = useState(false);
+
+  const [errMessage, setErrMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    userRef.focus();
+  }, []);
+  // to validate username
+  useEffect(() => {
+    setValidName(USER_REGEX.test(username));
+    console.log("hi");
+  }, [username]);
+
+  //validating password and matching confirm pass
+  useEffect(() => {
+    const result = PWD_REGEX.test(pwd);
+    setValidPwd(result);
+    const match = pwd === matchPwd;
+    setValidMatchPwd(match);
+  }, [pwd, matchPwd]);
+
+  useEffect(() => {
+    setErrMessage("");
+  }, [username, pwd, matchPwd]);
+
+  // to handle submit
   const submitHandler = (e) => {
     e.preventDefault();
   };
@@ -8,6 +52,7 @@ function RegisterScreen() {
     <div className="container">
       <div>
         <p className="font-bold text-4xl mb-10">Create Your Account</p>
+        <p ref={errRef} className={errMessage ? "text-red-600" : "hidden"}></p>
         <form onSubmit={submitHandler}>
           <div className="field">
             <label htmlFor="username">
@@ -18,6 +63,7 @@ function RegisterScreen() {
               className="input"
               name="username"
               placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="field">
