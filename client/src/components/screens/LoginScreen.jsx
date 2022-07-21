@@ -1,6 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 function LoginScreen() {
+  const [username, setUsername] = useState("");
+  const [pwd, setPwd] = useState("");
+
   const submitHandler = (e) => {
     e.preventDefault();
   };
@@ -18,6 +21,7 @@ function LoginScreen() {
               className="input"
               name="email"
               placeholder="Email"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="field">
@@ -29,6 +33,7 @@ function LoginScreen() {
               className="input"
               name="password"
               placeholder="Password"
+              onChange={(e) => setPwd(e.target.value)}
             />
           </div>
           <button

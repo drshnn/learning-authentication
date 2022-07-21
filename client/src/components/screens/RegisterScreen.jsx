@@ -9,50 +9,51 @@ function RegisterScreen() {
   const errRef = useRef();
   // states
   const [username, setUsername] = useState("");
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  // const [validName, setValidName] = useState(false);
+  // const [userFocus, setUserFocus] = useState(false);
+  const [email, setEmail] = useState("");
 
   const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
+  // const [validPwd, setValidPwd] = useState(false);
+  // const [pwdFocus, setPwdFocus] = useState(false);
 
   const [matchPwd, setMatchPwd] = useState("");
-  const [validMatchPwd, setValidMatchPwd] = useState(false);
-  const [matchPwdFocus, setMatchPwdFocus] = useState(false);
+  // const [validMatchPwd, setValidMatchPwd] = useState(false);
+  // const [matchPwdFocus, setMatchPwdFocus] = useState(false);
 
-  const [errMessage, setErrMessage] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [errMessage, setErrMessage] = useState("");
+  // const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    userRef.focus();
-  }, []);
+  // useEffect(() => {
+  //   userRef.focus();
+  // }, []);
   // to validate username
-  useEffect(() => {
-    setValidName(USER_REGEX.test(username));
-    console.log("hi");
-  }, [username]);
+  // useEffect(() => {
+  //   setValidName(USER_REGEX.test(username));
+  //   console.log("hi");
+  // }, [username]);
 
-  //validating password and matching confirm pass
-  useEffect(() => {
-    const result = PWD_REGEX.test(pwd);
-    setValidPwd(result);
-    const match = pwd === matchPwd;
-    setValidMatchPwd(match);
-  }, [pwd, matchPwd]);
+  // //validating password and matching confirm pass
+  // useEffect(() => {
+  //   const result = PWD_REGEX.test(pwd);
+  //   setValidPwd(result);
+  //   const match = pwd === matchPwd;
+  //   setValidMatchPwd(match);
+  // }, [pwd, matchPwd]);
 
-  useEffect(() => {
-    setErrMessage("");
-  }, [username, pwd, matchPwd]);
+  // useEffect(() => {
+  //   setErrMessage("");
+  // }, [username, pwd, matchPwd]);
 
   // to handle submit
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log({ username, email, pwd });
   };
   return (
     <div className="container">
       <div>
         <p className="font-bold text-4xl mb-10">Create Your Account</p>
-        <p ref={errRef} className={errMessage ? "text-red-600" : "hidden"}></p>
         <form onSubmit={submitHandler}>
           <div className="field">
             <label htmlFor="username">
@@ -75,6 +76,7 @@ function RegisterScreen() {
               className="input"
               name="email"
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="field">
@@ -86,6 +88,7 @@ function RegisterScreen() {
               className="input"
               name="password"
               placeholder="Password"
+              onChange={(e) => setPwd(e.target.value)}
             />
           </div>
           <button
