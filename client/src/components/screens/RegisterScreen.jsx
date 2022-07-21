@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register, reset } from "../../features/auth/authSlice";
+import Spinner from "./Spinner";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -56,10 +57,34 @@ function RegisterScreen() {
     (state) => state.auth
   );
 
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log({ username, email, pwd });
+    const userData = {
+      username: username,
+      email: email,
+      password: pwd,
+    };
+
+    dispatch(register(userData));
   };
+  if (isLoading) {
+    return (
+      <div className="container">
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <div className="container">
       <div>

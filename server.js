@@ -3,12 +3,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error')
-
+const cors = require('cors')
 //connectDb
 connectDB()
 
 const app = express()
 app.use(express.json())
+
+//cors
+app.use(cors({
+    origin:'http://localhost:3000'
+}))
 
 //routes
 app.use('/api/auth/',require('./routes/auth'))
