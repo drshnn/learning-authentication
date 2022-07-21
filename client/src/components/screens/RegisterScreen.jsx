@@ -1,4 +1,7 @@
 import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { register, reset } from "../../features/auth/authSlice";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -46,6 +49,13 @@ function RegisterScreen() {
   // }, [username, pwd, matchPwd]);
 
   // to handle submit
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log({ username, email, pwd });
