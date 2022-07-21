@@ -113,5 +113,6 @@ try {
 
 const sendToken = (user,statusCode,res)=>{
     const token = user.getSignedToken()
-    res.status(statusCode).json({success:true, token})
+    const userData = user.getUsernameEmail()
+    res.status(statusCode).json({success:true, token, userData})
 }
