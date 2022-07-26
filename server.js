@@ -1,6 +1,5 @@
 require('dotenv').config({path:"./config.env"})
 const express = require('express');
-const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error')
 const cors = require('cors')

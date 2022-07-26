@@ -1,12 +1,48 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../../features/auth/authSlice";
+import Spinner from "./Spinner";
+import { Link } from "react-router-dom";
 
 function LoginScreen() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
   const submitHandler = (e) => {
     e.preventDefault();
+
+    const userData = {
+      email: email,
+      password: pwd,
+    };
+
+    dispatch(login(userData));
   };
+  if (isLoading) {
+    return (
+      <div className="container">
+        <Spinner />
+      </div>
+    );
+  }
   return (
     <div className="container">
       <div>
@@ -21,7 +57,7 @@ function LoginScreen() {
               className="input"
               name="email"
               placeholder="Email"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="field">
@@ -43,6 +79,7 @@ function LoginScreen() {
             Submit
           </button>
         </form>
+        <Link to="/forgotpassword">Forgot Password</Link>
       </div>
     </div>
   );
