@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { register, reset } from "../../features/auth/authSlice";
 import Spinner from "./Spinner";
 
@@ -133,6 +133,14 @@ function RegisterScreen() {
             Submit
           </button>
         </form>
+        <div className="login mt-6 text-center">
+          <Link to="/login">
+            <span className="px-4 py-2 bg-blue-500 rounded-md text-white">
+              Login
+            </span>
+            {"    "} if already Registered
+          </Link>
+        </div>
       </div>
     </div>
   );

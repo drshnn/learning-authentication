@@ -26,6 +26,7 @@ function LoginScreen() {
 
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -72,6 +73,9 @@ function LoginScreen() {
               onChange={(e) => setPwd(e.target.value)}
             />
           </div>
+          <div className="mt-2 text-blue-700">
+            <Link to="/forgotpassword">Forgot Password</Link>
+          </div>
           <button
             type="submit"
             className="p-3 bg-blue-500 mt-10 w-full text-white rounded-sm"
@@ -79,7 +83,14 @@ function LoginScreen() {
             Submit
           </button>
         </form>
-        <Link to="/forgotpassword">Forgot Password</Link>
+        <div className="login mt-6 text-center">
+          <Link to="/register">
+            <span className="px-4 py-2 bg-blue-500 rounded-md text-white">
+              Register
+            </span>
+            {"    "} if new user
+          </Link>
+        </div>
       </div>
     </div>
   );

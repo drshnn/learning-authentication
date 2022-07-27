@@ -13,7 +13,7 @@ const initialState = {
 //Register User
 export const register = createAsyncThunk('auth/register',async(user,thunkAPI)=>{
     try {
-       return await authService.register(user)
+       return await authService.auth(user,'register/')
     } catch (error) {
        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
        return thunkAPI.rejectWithValue(message)
@@ -21,7 +21,7 @@ export const register = createAsyncThunk('auth/register',async(user,thunkAPI)=>{
 })
 export const login = createAsyncThunk('auth/login',async(user,thunkAPI)=>{
     try {
-       return await authService.login(user)
+       return await authService.auth(user,'login/')
     } catch (error) {
        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
        return thunkAPI.rejectWithValue(message)
@@ -38,11 +38,12 @@ export const authSlice = createSlice({
             state.message = ""
         },
         logout:(state)=>{
-            state.user = null,
-            state.isError=false,
-            state.isSuccess=false,
-            state.isLoading=false,
+            state.user = null
+            state.isError=false
+            state.isSuccess=false
+            state.isLoading=false
             state.message =""
+
         }
     },
     extraReducers:(builder)=>{
@@ -56,6 +57,20 @@ export const authSlice = createSlice({
             state.user = action.payload
         })
         .addCase(register.rejected,(state,action)=>{
+            state.isLoading=false
+            state.isError = true
+            state.message = action.payload
+            state.user = null
+        })
+        .addCase(login.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(login.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.isSuccess = true
+            state.user = action.payload
+        })
+        .addCase(login.rejected,(state,action)=>{
             state.isLoading=false
             state.isError = true
             state.message = action.payload
